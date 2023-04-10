@@ -1,2 +1,191 @@
 #Abrir maquina virtual
 #digitar pwd (print working directory)
+#pwd (print working directory) donde estamos ubicados despues de cada comando se digita enter
+biouserunm@BioinfoUNM:~$ pwd
+/home/biouserunm
+
+#Comando ls visualizacion de carpeta
+biouserunm@BioinfoUNM:~$ ls
+2022-08-23-131953_800x600_scrot.png  Pictures
+2022-08-23-132005_800x600_scrot.png  prinseq-lite-0.20.4
+2022-08-23-225311_800x600_scrot.png  Public
+busco                                R
+Desktop                              ReadsAssembly_data
+Documents                            stacks-2.55
+Downloads                            Templates
+idba-master                          Trimmomatic-0.39
+miniconda3                           mkvcftools-vcftools-581c231
+Music                                Videos
+
+#Entramos al archivo de trabajo que WGS-bacterias dentro de Documents y Genomica
+##Entramos primero a Documents y con ls miramos que archivos hay
+biouserunm@BioinfoUNM:~$ cd Documents
+biouserunm@BioinfoUNM:~/Documents$ ls
+'ARCHIVOS DE PROGRAMACION'   Bioinformatica   BOLADRB3   Genomica
+
+#Avanzamos hacia el archivo Genomica
+biouserunm@BioinfoUNM:~/Documents$ cd Genomica
+biouserunm@BioinfoUNM:~/Documents/Genomica$ ls
+CRIOLLO_S14_L001_R1_001.fastq.gz      WGS-bacterias
+GBS-plantas                           WGS-bacterias-20210329T210518Z-001.zip
+GBS-plantas-20210329T210533Z-001.zip
+
+#entramos a la carpeta WGS-bacterias
+biouserunm@BioinfoUNM:~/Documents/Genomica$ cd WGS-bacterias
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ ls
+01_Quality_check               sub_sar89-2015_r1_fastqc.zip
+02_Trimmed                     sub_sar89-2015_r1.fq
+03_Ref_build                   sub_sar89-2015_r2_fastqc.html
+04_Mapped                      sub_sar89-2015_r2_fastqc.zip
+CP008929.1                     sub_sar89-2015_r2.fq
+sub_sar89-2015_r1_fastqc.html
+
+#Creamos el archivo 01_Quality_check con el comando mkdir 
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ mkdir 01_Quality:check
+
+#Verificamos si se creo el archivo
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ ls
+01_Quality:check               sub_sar89-2015_r1.fq
+CP008929.1                     sub_sar89-2015_r2_fastqc.html
+sub_sar89-2015_r1_fastqc.html  sub_sar89-2015_r2_fastqc.zip
+sub_sar89-2015_r1_fastqc.zip   sub_sar89-2015_r2.fq
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ 
+
+#Corremos el programa de analisis fastqc con comando fastqc  *.
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ fastqc *.fq -o 01_Quality_check
+Started analysis of sub_sar89-2015_r1.fq
+Approx 5% complete for sub_sar89-2015_r1.fq
+Approx 10% complete for sub_sar89-2015_r1.fq
+Approx 15% complete for sub_sar89-2015_r1.fq
+Approx 20% complete for sub_sar89-2015_r1.fq
+Approx 25% complete for sub_sar89-2015_r1.fq
+Approx 30% complete for sub_sar89-2015_r1.fq
+Approx 35% complete for sub_sar89-2015_r1.fq
+Approx 40% complete for sub_sar89-2015_r1.fq
+Approx 45% complete for sub_sar89-2015_r1.fq
+Approx 50% complete for sub_sar89-2015_r1.fq
+Approx 55% complete for sub_sar89-2015_r1.fq
+Approx 60% complete for sub_sar89-2015_r1.fq
+Approx 65% complete for sub_sar89-2015_r1.fq
+Approx 70% complete for sub_sar89-2015_r1.fq
+Approx 75% complete for sub_sar89-2015_r1.fq
+Approx 80% complete for sub_sar89-2015_r1.fq
+Approx 85% complete for sub_sar89-2015_r1.fq
+Approx 90% complete for sub_sar89-2015_r1.fq
+Approx 95% complete for sub_sar89-2015_r1.fq
+Approx 100% complete for sub_sar89-2015_r1.fq
+Analysis complete for sub_sar89-2015_r1.fq
+
+#digitamos fastqc en terminal 
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ fastqc se ven los arcvhivos html
+
+#Realizamos trimming y filtrado de sequencias (Trimmomatic)
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ mkdir 02_Trimmed 
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ ls
+01_Quality_check               sub_sar89-2015_r1.fq
+02_Trimmed                     sub_sar89-2015_r2_fastqc.html
+CP008929.1                     sub_sar89-2015_r2_fastqc.zip
+sub_sar89-2015_r1_fastqc.html  sub_sar89-2015_r2.fq
+sub_sar89-2015_r1_fastqc.zip
+
+#Corremos el programa
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ java -jar /home/biouserunm/Trimmomatic-0.39/trimmomatic-0.39.jar PE -phred33 ./sub_sar89-2015_r1.fq ./sub_sar89-2015_r2.fq 02_Trimmed/sub_sar89-2015.paired.r1.fq.gz 02_Trimmed/sub_sar89-2015.unpaired.r1.fq.gz 02_Trimmed/sub_sar89-15.paired.r2.fq.gz 02_Trimmed/sub_sar89-2015.unpaired.r2.fq.gz LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+TrimmomaticPE: Started with arguments:
+ -phred33 ./sub_sar89-2015_r1.fq ./sub_sar89-2015_r2.fq 02_Trimmed/sub_sar89-2015.paired.r1.fq.gz 02_Trimmed/sub_sar89-2015.unpaired.r1.fq.gz 02_Trimmed/sub_sar89-15.paired.r2.fq.gz 02_Trimmed/sub_sar89-2015.unpaired.r2.fq.gz LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+Multiple cores found: Using 2 threads
+Input Read Pairs: 120000 Both Surviving: 112503 (93.75%) Forward Only Surviving: 7033 (5.86%) Reverse Only Surviving: 236 (0.20%) Dropped: 228 (0.19%)
+TrimmomaticPE: Completed successfully
+
+#mapeamos el genoma con bowtie instalamos con sudo apt install bowtie2
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ sudo apt install bowtie2
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+bowtie2 is already the newest version (2.3.4.1-1).
+0 upgraded, 0 newly installed, 0 to remove and 283 not upgraded.
+
+#Creamos carpeta de trabajo mkdir 03_ref_buid para guardar los indices del genoma
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ mkdir 03_ref_buid
+
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ ls
+01_Quality_check  sub_sar89-2015_r1_fastqc.html  sub_sar89-2015_r2_fastqc.zip
+02_Trimmed        sub_sar89-2015_r1_fastqc.zip   sub_sar89-2015_r2.fq
+03_ref_buid       sub_sar89-2015_r1.fq
+CP008929.1        sub_sar89-2015_r2_fastqc.html
+
+#Ejecutamos Bowtie2 con bowtie2-build CP008929.1 ./03_Ref_build/kpn_ref
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ bowtie2-build CP008929.1 ./03_Ref_build/kpn_ref
+Settings:
+  Output files: "./03_Ref_build/kpn_ref.*.bt2"
+  Line rate: 6 (line is 64 bytes)
+  Lines per side: 1 (side is 64 bytes)
+  Offset rate: 4 (one in 16)
+  FTable chars: 10........
+Total time for backward call to driver() for mirror index: 00:00:02
+
+#Despues bowtie2 imprime el resultado en pantalla
+#Creamos archivo  04_Mapped
+#Nos movemos a archivo Trimmed y ejecutamos
+
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias$ cd 02_Trimmed
+#Corremos Bowtie2
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias/02_Trimmed$ bowtie2 -p 8 -x ../03_Ref_build/kpn_ref -1 sub_sar89-2015.paired.r1.fq.gz -2 sub_sar89-15.paired.r2.fq.gz -S ../04_Mapped/sub_sar89-2015.sam
+ 
+112503 reads; of these:
+  112503 (100.00%) were paired; of these:
+    52943 (47.06%) aligned concordantly 0 times
+    58752 (52.22%) aligned concordantly exactly 1 time
+    808 (0.72%) aligned concordantly >1 times
+    ----
+    52943 pairs aligned concordantly 0 times; of these:
+      34029 (64.27%) aligned discordantly 1 time
+    ----
+    18914 pairs aligned 0 times concordantly or discordantly; of these:
+      37828 mates make up the pairs; of these:
+        34705 (91.74%) aligned 0 times
+        2299 (6.08%) aligned exactly 1 time
+        824 (2.18%) aligned >1 times
+84.58% overall alignment rate
+
+#Vamos a carpeta de carpeta 04_Mapped e inspeccionar el archivo SAM
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias/04_Mapped$ less -S sub_sar89-2015.sa
+#Nos envia a otra ventana
+@HD     VN:1.0  SO:unsorted
+@SQ     SN:CP008929.1   LN:5317001
+@PG     ID:bowtie2      PN:bowtie2      VN:2.3.4.1      CL:"/usr/bin/bowtie2-a
+M02866:19:000000000-AEYEH:1:1112:10885:20449    83      CP008929.1      906777
+M02866:19:000000000-AEYEH:1:1112:10885:20449    163     CP008929.1      906619
+M02866:19:000000000-AEYEH:1:2104:16266:9679     97      CP008929.1      270588
+M02866:19:000000000-AEYEH:1:2104:16266:9679     145     CP008929.1      270639
+M02866:19:000000000-AEYEH:1:1113:2566:13258     97      CP008929.1      205128
+M02866:19:000000000-AEYEH:1:1113:2566:13258     145     CP008929.1      205163
+M02866:19:000000000-AEYEH:1:1108:4101:7200      81      CP008929.1      467148
+M02866:19:000000000-AEYEH:1:1108:4101:7200      161     CP008929.1      467101
+M02866:19:000000000-AEYEH:1:1114:23905:12046    83      CP008929.1      141715
+M02866:19:000000000-AEYEH:1:1114:23905:12046    163     CP008929.1      141688
+M02866:19:000000000-AEYEH:1:1111:12498:13160    99      CP008929.1      434166....
+
+#Para regresar digitamos q
+
+#Segujdamente convertiremos el archivo de mapeo .sam en el formato binario .bam con el algoritmo samtools view
+
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias/04_Mapped$ sudo apt install samtools
+[sudo] password for biouserunm: 
+Sorry, try again.
+[sudo] password for biouserunm: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+samtools is already the newest version (1.7-1).
+0 upgraded, 0 newly installed, 0 to remove and 283 not upgraded.
+
+#Se corre samtools desde WGS-bacterias
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias/$ samtools view -S -b 04_Mapped/sub_sar89-2015.sam >04_Mapped/sub_sar89-2015.bam 
+samtools flagstat 04_Mapped/sub_sar89-2015.bam > 04_Mapped/sub_sar89-2015.bam.txt
+
+#Ordenar los archivo bam
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias/04_Mapped$ samtools sort sub_sar89-2015.bam -o sub_sar89-2015.sorted.bam
+
+#Indexamos archivo bam con bai
+biouserunm@BioinfoUNM:~/Documents/Genomica/WGS-bacterias/04_Mapped$ samtools index sub_sar89-2015.sorted.bam sub_sar89-2015.sorted.bam.bai
