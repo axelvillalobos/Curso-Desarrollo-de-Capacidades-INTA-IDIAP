@@ -1,0 +1,2 @@
+#Abrir maquina virtual
+#digitar pwd (print working directory)
