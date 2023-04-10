@@ -1,0 +1,203 @@
+#Creamos primer archivo 01_Quality_check
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ mkdir 01_Quality_check
+
+#Verificamos con ls
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ ls
+01_Quality_check  criollo_S14_r1.fastqc.zip  criollo_S14_r2.fastqc.gz
+BOLADRB3          criollo_S14_r1.fq          criollo_S14_r2.fq
+
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ 
+
+#Corremos el programa de analisis fastqc con comando fastqc  *.
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ fastqc *.fq -o 01_Quality_check/
+Started analysis of criollo_S14_r1.fq
+Approx 5% complete for criollo_S14_r1.fq
+Approx 10% complete for criollo_S14_r1.fq
+Approx 15% complete for criollo_S14_r1.fq
+Approx 20% complete for criollo_S14_r1.fq
+Approx 25% complete for criollo_S14_r1.fq
+Approx 30% complete for criollo_S14_r1.fq
+Approx 35% complete for criollo_S14_r1.fq
+Approx 40% complete for criollo_S14_r1.fq
+Approx 45% complete for criollo_S14_r1.fq
+Approx 50% complete for criollo_S14_r1.fq
+Approx 55% complete for criollo_S14_r1.fq
+Approx 60% complete for criollo_S14_r1.fq
+Approx 65% complete for criollo_S14_r1.fq
+Approx 70% complete for criollo_S14_r1.fq
+Approx 75% complete for criollo_S14_r1.fq
+Approx 80% complete for criollo_S14_r1.fq
+Approx 85% complete for criollo_S14_r1.fq
+Approx 90% complete for criollo_S14_r1.fq
+Approx 95% complete for criollo_S14_r1.fq
+Analysis complete for criollo_S14_r1.fq
+Started analysis of criollo_S14_r2.fq
+Approx 5% complete for criollo_S14_r2.fq
+Approx 10% complete for criollo_S14_r2.fq
+Approx 15% complete for criollo_S14_r2.fq
+Approx 20% complete for criollo_S14_r2.fq
+Approx 25% complete for criollo_S14_r2.fq
+Approx 30% complete for criollo_S14_r2.fq
+Approx 35% complete for criollo_S14_r2.fq
+Approx 40% complete for criollo_S14_r2.fq
+Approx 45% complete for criollo_S14_r2.fq
+Approx 50% complete for criollo_S14_r2.fq
+Approx 55% complete for criollo_S14_r2.fq
+Approx 60% complete for criollo_S14_r2.fq
+Approx 65% complete for criollo_S14_r2.fq
+Approx 70% complete for criollo_S14_r2.fq
+Approx 75% complete for criollo_S14_r2.fq
+Approx 80% complete for criollo_S14_r2.fq
+Approx 85% complete for criollo_S14_r2.fq
+Approx 90% complete for criollo_S14_r2.fq
+Approx 95% complete for criollo_S14_r2.fq
+Analysis complete for criollo_S14_r2.fq
+
+#Verificamos archivo
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ ls
+01_Quality_check  criollo_S14_r1.fastqc.zip  criollo_S14_r2.fastqc.gz
+BOLADRB3          criollo_S14_r1.fq          criollo_S14_r2.fq
+
+#Creamos archivo 02_Trimmed
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ mkdir 02_Trimmed
+#Verificamos
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ ls
+01_Quality_check  criollo_S14_r1.fastqc.zip  criollo_S14_r2.fq
+02_Trimmed        criollo_S14_r1.fq
+BOLADRB3          criollo_S14_r2.fastqc.gz
+
+#Filtrado y trimming
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$   java -jar /home/biouserunm/Trimmomatic-0.39/trimmomatic-0.39.jar PE -phred33 ./criollo_S14_r1.fq ./criollo_S14_r2.fq 02_Trimmed/criollo_S14.paired.r1.fq.gz 02_Trimmed/criollo_S14.unpaired.r1.fq.gz 02_Trimmed/criollo_S14.paired.r2.fq.gz 02_Trimmed/criollo_S14.unpaired.r2.fq.gz LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ java -jar /home/biouserunm/Trimmomatic-0.39/trimmomatic-0.39.jar PE -phred33 ./criollo_S14_r1.fq ./criollo_S14_r2.fq 02_Trimmed/criollo_S14.paired.r1.fq.gz 02_Trimmed/criollo_S14.unpaired.r1.fq.gz 02_Trimmed/criollo_S14.paired.r2.fq.gz 02_Trimmed/criollo_S14.unpaired.r2.fq.gz LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+TrimmomaticPE: Started with arguments:
+ -phred33 ./criollo_S14_r1.fq ./criollo_S14_r2.fq 02_Trimmed/criollo_S14.paired.r1.fq.gz 02_Trimmed/criollo_S14.unpaired.r1.fq.gz 02_Trimmed/criollo_S14.paired.r2.fq.gz 02_Trimmed/criollo_S14.unpaired.r2.fq.gz LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+Multiple cores found: Using 2 threads
+Input Read Pairs: 43619 Both Surviving: 41349 (94.80%) Forward Only Surviving: 1373 (3.15%) Reverse Only Surviving: 40 (0.09%) Dropped: 857 (1.96%)
+TrimmomaticPE: Completed successfully
+
+#Mapeo contra la referencia
+#Instalamos bowtie2
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ sudo apt install bowtie2
+[sudo] password for biouserunm: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+bowtie2 is already the newest version (2.3.4.1-1).
+0 upgraded, 0 newly installed, 0 to remove and 283 not upgraded.
+
+#Creamos archivo 03_Ref_build
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ mkdir 03_Ref_build
+
+#Verificamos archivos
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ ls
+01_Quality_check  BOLADRB3                   criollo_S14_r2.fastqc.gz
+02_Trimmed        criollo_S14_r1.fastqc.zip  criollo_S14_r2.fq
+03_Ref_build      criollo_S14_r1.fq
+
+#Armamos los indices del genoma de referencia BOLADRB3
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$  bowtie2-build BOLADRB3 ./03_Ref_build/kpn_ref
+Settings:
+  Output files: "./03_Ref_build/kpn_ref.*.bt2"
+  Line rate: 6 (line is 64 bytes)
+  Lines per side: 1 (side is 64 bytes)
+  Offset rate: 4 (one in 16)
+  FTable chars: 10
+  Strings: unpacked
+  Max bucket size: default
+  Max bucket size, sqrt multiplier: default
+  Max bucket size, len divisor: 4
+  Difference-cover sample period: 1024
+  Endianness: little....
+
+numSides: 25
+    numLines: 25
+    ebwtTotLen: 1600
+    ebwtTotSz: 1600
+    color: 0
+    reverse: 1
+Total time for backward call to driver() for mirror index: 00:00:00
+
+#Armados los indices ejecutamos bowtie2 para mapear los reads
+#Despues bowtie2 imprime el resultado en pantalla
+#Creamos archivo  04_Mapped
+#Nos movemos a archivo Trimmed y ejecutamos
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ cd 02_Trimmed
+#Verificamos con ls
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/02_Trimmed$ ls
+criollo_S14.paired.r1.fq.gz  criollo_S14.unpaired.r1.fq.gz
+criollo_S14.paired.r2.fq.gz  criollo_S14.unpaired.r2.fq.gz
+
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/02_Trimmed$ bowtie2 -p 8 -x ../03_Ref_build/kpn_ref -1 criollo_S14.paired.r1.fq.gz -2 criollo_S14.paired.r2.fq.gz -S ../04_Mapped/criollo_S14.sam
+41349 reads; of these:
+  41349 (100.00%) were paired; of these:
+    25718 (62.20%) aligned concordantly 0 times
+    15631 (37.80%) aligned concordantly exactly 1 time
+    0 (0.00%) aligned concordantly >1 times
+    ----
+    25718 pairs aligned concordantly 0 times; of these:
+      756 (2.94%) aligned discordantly 1 time
+    ----
+    24962 pairs aligned 0 times concordantly or discordantly; of these:
+      49924 mates make up the pairs; of these:
+        49096 (98.34%) aligned 0 times
+        828 (1.66%) aligned exactly 1 time
+        0 (0.00%) aligned >1 times
+40.63% overall alignment rate
+
+#Salimos de 02_Trimmed y vamos a 04_Mapped
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/04_Mapped$ less -S criollo_S14.sam
+@HD     VN:1.0  SO:unsorted
+@SQ     SN:AC_000180.1:25472161-25476885        LN:4725
+@PG     ID:bowtie2      PN:bowtie2      VN:2.3.4.1      CL:"/usr/bin/bowtie2-a
+M03370:2:000000000-AG343:1:1101:9338:1380       83      AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:9338:1380       163     AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:13504:1468      77      *       0       0
+M03370:2:000000000-AG343:1:1101:13504:1468      141     *       0       0
+M03370:2:000000000-AG343:1:1101:10998:1491      77      *       0       0
+M03370:2:000000000-AG343:1:1101:10998:1491      141     *       0       0
+M03370:2:000000000-AG343:1:1101:18370:1518      83      AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:18370:1518      163     AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:8514:1597       77      *       0       0
+M03370:2:000000000-AG343:1:1101:8514:1597       141     *       0       0
+M03370:2:000000000-AG343:1:1101:18630:1637      83      AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:18630:1637      163     AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:15397:1668      77      *       0       0
+M03370:2:000000000-AG343:1:1101:15397:1668      141     *       0       0
+M03370:2:000000000-AG343:1:1101:17995:1673      83      AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101:17995:1673      163     AC_000180.1:25472161-2
+M03370:2:000000000-AG343:1:1101
+
+#Para regresar digitamos q
+
+#Seguidamente convertiremos el archivo de mapeo .sam en el formato binario .bam con el algoritmo samtools view
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/04_Mapped$ sudo apt install samtools
+[sudo] password for biouserunm: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+samtools is already the newest version (1.7-1).
+0 upgraded, 0 newly installed, 0 to remove and 283 not upgraded.
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/04_Mapped$
+
+#Se corre samtools desde GenomicAN
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ samtools view -S -b 04_Mapped/criollo_S14.sam >04_Mapped/criollo_S14.bam 
+biouserunm@BioinfoUNM:~/Documents/GenomicAN$ samtools flagstat 04_Mapped/criollo_S14.bam > 04_Mapped/criollo_S14.sam.txt
+
+#Se verifica la creacion de los archivos
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/04_Mapped$ ls
+criollo_S14.bam  criollo_S14.sam  criollo_S14.sam.txt
+
+#Ordenar los archivo bam
+biouserunm@BioinfoUNM:~/Documents/Genomica/04_Mapped$ samtools sort criollo_S14.bam -o criollo_S14.sorted.bam
+
+#Indexamos archivo bai
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/04_Mapped$ samtools index criollo_S14.sorted.bam criollo_S14.sorted.bam.bai
+
+#Verificamos
+biouserunm@BioinfoUNM:~/Documents/GenomicAN/04_Mapped$ ls
+criollo_S14.bam  criollo_S14.sam.txt     criollo_S14.sorted.bam.bai
+criollo_S14.sam  criollo_S14.sorted.bam
+
+
+
